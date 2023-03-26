@@ -11,7 +11,7 @@ import { CharacterCard } from '../CharacterCard/CharacterCard'
 import { Footer } from '../Pagination/Footer'
 
 export const CardsGrid = () => {
-  const drawerWidth = 190
+  const drawerWidth = 230
   const { data } = useGetCharacterQuery()
   const { searchName, status, gender, page } = useSelector(
     state => state?.character

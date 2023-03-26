@@ -1,15 +1,15 @@
-import Card from '@mui/material/Card'
 import Box from '@mui/material/Box'
-import Stack from '@mui/material/Stack'
+import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { EpisodesInfo } from '../EpisodesInfo/EpisodesInfo'
+
 import {
   useGetCharacterByIdQuery,
   useGetEpisodesInfoQuery,
   useGetEpisodesQuery,
 } from '../../services/characterApi'
+import { EpisodesInfo } from '../EpisodesInfo/EpisodesInfo'
 
 export const CharacterInfo = ({ id }) => {
   const { data: character } = useGetCharacterByIdQuery(id)
@@ -24,15 +24,15 @@ export const CharacterInfo = ({ id }) => {
   }
 
   return (
-    <Stack mt={10} sx={{ flexDirection: 'row' }}>
-      <Card sx={{ maxWidth: 1200 }}>
+    <Box mt={10} sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Card sx={{ maxWidth: 900 }}>
         <CardContent
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
             alignItems: 'center',
-            maxWidth: 900,
+            maxWidth: 800,
           }}
         >
           <Box>
@@ -70,6 +70,6 @@ export const CharacterInfo = ({ id }) => {
         </CardContent>
         <EpisodesInfo episode={episode} />
       </Card>
-    </Stack>
+    </Box>
   )
 }

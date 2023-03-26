@@ -8,15 +8,15 @@ import { Link } from 'react-router-dom'
 
 export const CharacterCard = ({ character }) => {
   return (
-    <Link to="/details/" state={{ id: character.id }}>
-      <Grid
-        item
-        sx={{ maxWidth: 425, minWidth: 425 }}
-        xs={12}
-        sm={6}
-        md={2}
-        key={character.id}
-      >
+    <Grid
+      item
+      sx={{ maxWidth: 425, minWidth: 425 }}
+      xs={12}
+      sm={6}
+      md={2}
+      key={character.id}
+    >
+      <Link to="/details/" state={{ id: character.id }}>
         <Card>
           <CardActionArea>
             <CardMedia
@@ -50,7 +50,7 @@ export const CharacterCard = ({ character }) => {
             </CardContent>
           </CardActionArea>
         </Card>
-      </Grid>
-    </Link>
+      </Link>
+    </Grid>
   )
 }

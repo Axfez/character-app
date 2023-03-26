@@ -22,6 +22,10 @@ export const Filters = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
     if (e.key === 'Enter' || e.type === 'click') {
       dispatch(search(searchName))
       dispatch(statusSelected(status))
@@ -31,6 +35,10 @@ export const Filters = () => {
   }
 
   const handleClear = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
     dispatch(search(''))
     dispatch(statusSelected(''))
     dispatch(genderSelected(''))
