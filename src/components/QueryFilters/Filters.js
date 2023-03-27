@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import Input from '@mui/material/Input'
 
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   genderSelected,
   pageSelected,
@@ -18,8 +18,6 @@ export const Filters = () => {
   const [searchName, setSearchName] = useState('')
   const [gender, setGender] = useState('')
   const [status, setStatus] = useState('')
-
-  const { visibility } = useSelector(state => state?.mobile)
 
   const dispatch = useDispatch()
 
@@ -34,7 +32,7 @@ export const Filters = () => {
       dispatch(statusSelected(status))
       dispatch(genderSelected(gender))
       dispatch(pageSelected(1))
-      dispatch(setVisibility(!visibility))
+      dispatch(setVisibility(false))
     }
   }
 
@@ -47,7 +45,7 @@ export const Filters = () => {
     dispatch(statusSelected(''))
     dispatch(genderSelected(''))
     dispatch(pageSelected(1))
-    dispatch(setVisibility(!visibility))
+    dispatch(setVisibility(false))
   }
 
   const handleStatus = e => {
