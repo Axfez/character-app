@@ -5,18 +5,21 @@ import Button from '@mui/material/Button'
 import Input from '@mui/material/Input'
 
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   genderSelected,
   pageSelected,
   search,
   statusSelected,
 } from '../../services/characterSlice'
+import { setVisibility } from '../../services/mobileSlice'
 
 export const Filters = () => {
   const [searchName, setSearchName] = useState('')
   const [gender, setGender] = useState('')
   const [status, setStatus] = useState('')
+
+  const { visibility } = useSelector(state => state?.mobile)
 
   const dispatch = useDispatch()
 
@@ -31,6 +34,7 @@ export const Filters = () => {
       dispatch(statusSelected(status))
       dispatch(genderSelected(gender))
       dispatch(pageSelected(1))
+      dispatch(setVisibility(!visibility))
     }
   }
 
@@ -43,6 +47,7 @@ export const Filters = () => {
     dispatch(statusSelected(''))
     dispatch(genderSelected(''))
     dispatch(pageSelected(1))
+    dispatch(setVisibility(!visibility))
   }
 
   const handleStatus = e => {

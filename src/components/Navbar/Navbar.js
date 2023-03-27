@@ -7,16 +7,18 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setVisibility } from '../../services/mobileSlice'
 import { Filters } from '../QueryFilters/Filters'
 
 export const Navbar = () => {
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const { visibility } = useSelector(state => state?.mobile)
 
+  const dispatch = useDispatch()
   const drawerWidth = 200
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
+    dispatch(setVisibility(!visibility))
   }
 
   return (
@@ -52,7 +54,7 @@ export const Navbar = () => {
         >
           <Drawer
             variant="temporary"
-            open={mobileOpen}
+            open={visibility}
             onClose={handleDrawerToggle}
             ModalProps={{ keepMounted: true }}
             sx={{

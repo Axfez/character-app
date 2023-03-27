@@ -19,7 +19,7 @@ export const ScrollTop = props => {
     <Fade in={trigger}>
       <Box
         onClick={handleClick}
-        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        sx={{ position: 'fixed', bottom: 50, right: 16 }}
       >
         {children}
       </Box>
