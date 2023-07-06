@@ -7,20 +7,19 @@ import Typography from '@mui/material/Typography'
 import {
   useGetCharacterByIdQuery,
   useGetEpisodesInfoQuery,
-  useGetEpisodesQuery,
 } from '../../services/characterApi'
 import { EpisodesInfo } from '../EpisodesInfo/EpisodesInfo'
 
 export const CharacterInfo = ({ id }) => {
   const { data: character } = useGetCharacterByIdQuery(id)
-  const { data: epId } = useGetEpisodesQuery(id)
-  const { data: episode } = useGetEpisodesInfoQuery(epId || [], { skip: !epId })
+  const { data: episodes } = useGetEpisodesInfoQuery(character?.episode || [], { skip: !character?.episode })
+
 
   let type
   if (character?.type === '') {
     type = 'N/A'
   } else {
-    type = `${character?.type}`
+    type = `${character?.type} `
   }
 
   return (
@@ -68,7 +67,7 @@ export const CharacterInfo = ({ id }) => {
             </CardContent>
           </Box>
         </CardContent>
-        <EpisodesInfo episode={episode} />
+        <EpisodesInfo episodes={episodes} />
       </Card>
     </Box>
   )

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button'
 import Input from '@mui/material/Input'
 
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   genderSelected,
   pageSelected,
@@ -15,18 +15,18 @@ import {
 import { setVisibility } from '../../services/mobileSlice'
 
 export const Filters = () => {
-  const [searchName, setSearchName] = useState('')
-  const [gender, setGender] = useState('')
-  const [status, setStatus] = useState('')
+  const { searchName: storedSearch, gender: storedGender, status: storedStatus } = useSelector(
+    state => state.character
+  )
+  const [searchName, setSearchName] = useState(storedSearch)
+  const [gender, setGender] = useState(storedGender)
+  const [status, setStatus] = useState(storedStatus)
 
   const dispatch = useDispatch()
 
   const handleSubmit = e => {
     e.preventDefault()
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
+    window.scrollTo({ top: 0, behavior: 'smooth', })
     if (e.key === 'Enter' || e.type === 'click') {
       dispatch(search(searchName))
       dispatch(statusSelected(status))
@@ -37,30 +37,30 @@ export const Filters = () => {
   }
 
   const handleClear = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
+    window.scrollTo({ top: 0, behavior: 'smooth', })
     dispatch(search(''))
     dispatch(statusSelected(''))
     dispatch(genderSelected(''))
     dispatch(pageSelected(1))
     dispatch(setVisibility(false))
+    setStatus('')
+    setGender('')
+    setSearchName('')
   }
 
   const handleStatus = e => {
     e.preventDefault()
-    setStatus(e.target.value)
+    setStatus(e.currentTarget.value)
   }
 
   const handleGender = e => {
     e.preventDefault()
-    setGender(e.target.value)
+    setGender(e.currentTarget.value)
   }
 
   const handleSearch = e => {
     e.preventDefault()
-    setSearchName(e.target.value)
+    setSearchName(e.currentTarget.value)
   }
 
   return (
@@ -81,18 +81,20 @@ export const Filters = () => {
           onKeyUp={handleSubmit}
         />
       </Box>
+
       <Box sx={{ marginTop: '20px', textAlign: 'center' }}>
         <div>Status</div>
-        <select onChange={handleStatus}>
+        <select onChange={handleStatus} value={status}>
           <option></option>
           <option value="alive">Alive</option>
           <option value="dead">Dead</option>
           <option value="unknown">Unknown</option>
         </select>
       </Box>
+
       <Box sx={{ marginTop: '15px', textAlign: 'center' }}>
         <div>Gender</div>
-        <select onChange={handleGender}>
+        <select onChange={handleGender} value={gender}>
           <option></option>
           <option value="female">Female</option>
           <option value="male">Male</option>
@@ -100,6 +102,7 @@ export const Filters = () => {
           <option value="unknown">Unknown</option>
         </select>
       </Box>
+
       <Button
         variant="outlined"
         sx={{ width: '4px', marginTop: '20px', marginLeft: '65px' }}
@@ -107,6 +110,7 @@ export const Filters = () => {
       >
         <SearchIcon />
       </Button>
+
       <Button
         variant="outlined"
         sx={{ width: '4px', marginTop: '20px', marginLeft: '65px' }}

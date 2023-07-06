@@ -4,28 +4,28 @@ export const characterApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api/' }),
   endpoints: builder => ({
     getCharacter: builder.query({
-      query: () => '/character',
-    }),
-    filterCharacter: builder.query({
       query: ({ searchName, status, gender, page }) => {
-        return {
-          url: `/character/?name=${searchName}&status=${status}&gender=${gender}&page=${page}`,
+        let url = '/character'
+        if (searchName || status || gender || page) {
+          url += '?'
+          if (searchName) url += `name=${searchName}&`
+          if (status) url += `status=${status}&`
+          if (gender) url += `gender=${gender}&`
+          if (page) url += `page=${page}`
         }
+        return { url }
       },
     }),
+
     getCharacterById: builder.query({
-      query: id => `/character/${id}`,
-    }),
-    getEpisodes: builder.query({
       query: id => `/character/${id}`,
       transformResponse: response => {
         const { episode } = response
-        const characterEpisodes = episode.map(episodeUrl =>
-          episodeUrl.split('/').pop()
-        )
-        return characterEpisodes
-      },
+        const epId = episode.map(episodeUrl => episodeUrl.split('/').pop())
+        return { ...response, episode: epId }
+      }
     }),
+
     getEpisodesInfo: builder.query({
       query: epId => `/episode/[${epId}]`,
     }),
@@ -34,8 +34,6 @@ export const characterApi = createApi({
 
 export const {
   useGetCharacterQuery,
-  useFilterCharacterQuery,
   useGetCharacterByIdQuery,
-  useGetEpisodesQuery,
   useGetEpisodesInfoQuery,
 } = characterApi

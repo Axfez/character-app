@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import { useSelector } from 'react-redux'
 
 import {
-  useFilterCharacterQuery,
   useGetCharacterQuery,
 } from '../../services/characterApi'
 import { CharacterCard } from '../CharacterCard/CharacterCard'
@@ -12,12 +11,12 @@ import { Footer } from '../Pagination/Footer'
 
 export const CardsGrid = () => {
   const drawerWidth = 230
-  const { data } = useGetCharacterQuery()
+  const { data } = useGetCharacterQuery({})
   const { searchName, status, gender, page } = useSelector(
     state => state?.character
   )
   const { data: dataFiltered, isError } =
-    useFilterCharacterQuery({ searchName, status, gender, page }) || {}
+    useGetCharacterQuery({ searchName, status, gender, page }) || {}
 
   let content
   let footContent
@@ -30,12 +29,12 @@ export const CardsGrid = () => {
     content =
       searchName === '' && status === '' && gender === '' && page === 1
         ? data?.results?.map(character => {
-            return <CharacterCard character={character} key={character?.id} />
-          })
+          return <CharacterCard character={character} key={character?.id} />
+        })
         : dataFiltered?.results?.length > 0 &&
-          dataFiltered?.results?.map(character => {
-            return <CharacterCard character={character} key={character?.id} />
-          })
+        dataFiltered?.results?.map(character => {
+          return <CharacterCard character={character} key={character?.id} />
+        })
   }
 
   if (!isError) {

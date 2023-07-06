@@ -1,23 +1,24 @@
+import { TabList } from '@mui/lab'
+import TabContext from '@mui/lab/TabContext'
+import TabPanel from '@mui/lab/TabPanel'
 import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
-import { useState } from 'react'
+import Tabs from '@mui/material/Tabs'
 import Typography from '@mui/material/Typography'
+import { useState } from 'react'
 
-export const EpisodesInfo = ({ episode }) => {
-  const [value, setValue] = useState('1')
+export const EpisodesInfo = ({ episodes }) => {
+  const [value, setValue] = useState(1)
 
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
 
-  const episodeTab = episode?.map(episode => (
+  const episodeTab = episodes?.map(episode => (
     <Tab label={`Ep. ${episode?.id}`} value={episode?.id} key={episode?.id} />
   ))
 
-  const episodeInfo = episode?.map(episode => (
+  const episodeInfo = episodes?.map(episode => (
     <TabPanel value={episode?.id} key={episode?.id}>
       <Typography>Episode Name: {episode?.name}</Typography>
       <Typography>Air date: {episode?.air_date}</Typography>
@@ -29,11 +30,14 @@ export const EpisodesInfo = ({ episode }) => {
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange}>{episodeTab}</TabList>
-        </Box>
+        <Tabs variant="scrollable" scrollButtons="auto" value={value}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+            <TabList onChange={handleChange}>{episodeTab}</TabList>
+          </Box>
+        </Tabs>
         {episodeInfo}
-      </TabContext>
-    </Box>
+      </TabContext >
+
+    </Box >
   )
 }
